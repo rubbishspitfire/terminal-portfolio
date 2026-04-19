@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
-const resume = "/Patience_Condell_Frontend_Developer_Resume.pdf";
+const resume = "/terminal-portfolio/Patience_Condell_Frontend_Developer_Resume.pdf";
 
 const COMMANDS = {
   help: [
