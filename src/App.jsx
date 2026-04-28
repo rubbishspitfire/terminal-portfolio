@@ -68,14 +68,14 @@ function App() {
   }, [history]);
 
   const openLink = (url) => {
-    window.open(url, "_blank");
-  };
+  window.location.href = url;
+};
 
   const handleCommand = (rawInput) => {
     const cmd = rawInput.trim().toLowerCase();
     if (!cmd) return;
 
-    let output = [`visitor@patience:~$ ${rawInput}`];
+    let output = [`visitor@patiencecodes:~$ ${rawInput}`];
 
     switch (cmd) {
       case "help":
@@ -87,19 +87,34 @@ function App() {
         break;
 
       case "resume":
-        output = [...output, "Opening resume...", ""];
-        openLink(resume);
-        break;
+  output = [
+    ...output,
+    "Resume:",
+    `${resume}`,
+    "",
+  ];
+  openLink(resume);
+  break;
 
-      case "github":
-        output = [...output, "Opening GitHub...", ""];
-        openLink("https://github.com/rubbishspitfire");
-        break;
+case "github":
+  output = [
+    ...output,
+    "GitHub:",
+    "https://github.com/rubbishspitfire",
+    "",
+  ];
+  openLink("https://github.com/rubbishspitfire");
+  break;
 
-      case "linkedin":
-        output = [...output, "Opening LinkedIn...", ""];
-        openLink("https://www.linkedin.com/in/patiencecondell/");
-        break;
+case "linkedin":
+  output = [
+    ...output,
+    "LinkedIn:",
+    "https://www.linkedin.com/in/patiencecondell/",
+    "",
+  ];
+  openLink("https://www.linkedin.com/in/patiencecondell/");
+  break;
 
       case "clear":
         setHistory([]);
@@ -134,11 +149,21 @@ function App() {
         </div>
 
         <div className="terminal-body">
-          {history.map((line, index) => (
-            <div key={index} className="terminal-line">
-              {line}
-            </div>
-          ))}
+          {history.map((line, index) => {
+              const isLink = line.startsWith("http") || line.startsWith("/");
+
+              return (
+              <div key={index} className="terminal-line">
+               {isLink ? (
+              <a href={line} target="_blank" rel="noopener noreferrer">
+                {line}
+              </a>
+            ) : (
+              line
+            )}
+           </div>
+          );
+          })}
 
           <form onSubmit={handleSubmit} className="input-row">
             <span className="prompt">visitor@patience:~$</span>
